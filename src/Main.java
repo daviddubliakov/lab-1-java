@@ -1,13 +1,19 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Random;
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int numberOfThreads = scanner.nextInt();
         BreakThread breakThread = new BreakThread();
 
-        new MainThread(1,5, breakThread).start();
-        new MainThread(2, 10, breakThread).start();
-        new MainThread(3, 1, breakThread).start();
+        for (int i = 0; i < numberOfThreads; i++) {
+            int threadId = i + 1;
+            Random random = new Random();
+            int stepsToAdd = random.nextInt(10 - 1 + 1) + 10; // Generates random number from 1 to 10
+            new MainThread(threadId,stepsToAdd, breakThread).start();
+        }
 
         new Thread(breakThread).start();
+
     }
 }
